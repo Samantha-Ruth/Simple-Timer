@@ -1,5 +1,4 @@
 
-
 // event listener to watch for click on start button
 
     // draw a full border around the timer
@@ -55,19 +54,36 @@
         };
 
         tick = () => {
-            // option one: current time sits in the timer instance
-            // option one of where we store this data; need to set up an event listener to watch 
-            // for an event change on the input. 
-            // Storing all data inside javaScript code.  More popular these days. 
-            this.timeLeft = this.timeLeft -1;
-            this.durationInput.value = this.timeLeft;
-            console.log("tick");
-            // option two : current tmie sits in the input element
-            // f where we use this data; a little bit easier.
-            // storing our data inside of our DOM
+            // Where does current time live?
+            //****** option 1 ********* 
+            // option one: current time is stored directly in the timer instance
+            // need to set up an event listener to watch for an event change on the input. Lot of reaching back and forth.
+            // "Storing all data inside javaScript code." More popular these days. 
 
-
+            // this.timeLeft = this.timeLeft -1;
+            // this.durationInput.value = this.timeLeft;
+            // ****** option 2 *************
+            //current time lives in the input element.
+            // Dom Centric approach, older and outdated
+            // "storing our data inside of our DOM"  Why do we use option number 1 instead of 2?  
+            // if change time in the input, will work immediately without an event listener.
+            if (this.timeRemaining <=0) {
+                this.pause();
+            } else {
+                this.timeRemaining = this.timeRemaining - 1; 
+            }
         }
+
+        // Getters and Setters are new to javascript, help hold code and hide away complexity to make it easer to read. 
+        // Set up a getter!  Retrieve a variable inside our class without invoking it. Don't need parenthesis. 
+        get timeRemaining() {
+            return parseFloat(this.durationInput.value);
+        }    
+
+        // Set up a setter.  Assign a value to the function.
+        set timeRemaining(time) {
+            this.durationInput.value = time;
+        }    
     }
 
     const durationInput = document.querySelector('#duration');
